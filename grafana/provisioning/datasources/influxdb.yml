@@ -1,0 +1,16 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB
+    type: influxdb
+    uid: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    jsonData:
+      version: Flux
+      organization: crypto-analytics
+      defaultBucket: crypto
+    secureJsonData:
+      token: $INFLUXDB_TOKEN
+    isDefault: true
+    editable: true

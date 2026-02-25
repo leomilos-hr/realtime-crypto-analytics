@@ -1,0 +1,2 @@
+apache-flink==1.18.1
+influxdb-client==1.38.0

@@ -1,0 +1,9 @@
+.git
+.gitignore
+.env
+README.md
+LICENSE
+__pycache__
+*.pyc
+.idea
+.vscode

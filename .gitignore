@@ -1,0 +1,41 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Docker volumes
+influxdb-data/
+grafana-data/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# SSL certificates
+nginx/ssl/*.pem
+nginx/ssl/*.key
+nginx/ssl/*.crt
+
+# Logs
+*.log
+
+# Generated files
+Hetzner_Deployment_Guide.pdf
+generate_guide.py
+
+# Claude Code
+.claude/

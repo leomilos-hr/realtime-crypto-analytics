@@ -1,0 +1,494 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "title": "BTC/USDT - ${interval} Candlestick",
+      "type": "candlestick",
+      "gridPos": { "h": 10, "w": 12, "x": 0, "y": 0 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "axisPlacement": "auto" },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r.symbol == \"BTCUSDT\")\n  |> filter(fn: (r) => r._field == \"open\" or r._field == \"high\" or r._field == \"low\" or r._field == \"close\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "mode": "candles",
+        "candleStyle": "candles",
+        "colorStrategy": "open-close",
+        "colors": { "up": "green", "down": "red", "flat": "gray" },
+        "includeAllFields": false
+      }
+    },
+    {
+      "title": "ETH/USDT - ${interval} Candlestick",
+      "type": "candlestick",
+      "gridPos": { "h": 10, "w": 12, "x": 12, "y": 0 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "axisPlacement": "auto" },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r.symbol == \"ETHUSDT\")\n  |> filter(fn: (r) => r._field == \"open\" or r._field == \"high\" or r._field == \"low\" or r._field == \"close\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "mode": "candles",
+        "candleStyle": "candles",
+        "colorStrategy": "open-close",
+        "colors": { "up": "green", "down": "red", "flat": "gray" },
+        "includeAllFields": false
+      }
+    },
+    {
+      "title": "DOT/USDT - ${interval} Candlestick",
+      "type": "candlestick",
+      "gridPos": { "h": 10, "w": 8, "x": 0, "y": 10 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "axisPlacement": "auto" },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r.symbol == \"DOTUSDT\")\n  |> filter(fn: (r) => r._field == \"open\" or r._field == \"high\" or r._field == \"low\" or r._field == \"close\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "mode": "candles",
+        "candleStyle": "candles",
+        "colorStrategy": "open-close",
+        "colors": { "up": "green", "down": "red", "flat": "gray" },
+        "includeAllFields": false
+      }
+    },
+    {
+      "title": "BCH/USDT - ${interval} Candlestick",
+      "type": "candlestick",
+      "gridPos": { "h": 10, "w": 8, "x": 8, "y": 10 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "axisPlacement": "auto" },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r.symbol == \"BCHUSDT\")\n  |> filter(fn: (r) => r._field == \"open\" or r._field == \"high\" or r._field == \"low\" or r._field == \"close\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "mode": "candles",
+        "candleStyle": "candles",
+        "colorStrategy": "open-close",
+        "colors": { "up": "green", "down": "red", "flat": "gray" },
+        "includeAllFields": false
+      }
+    },
+    {
+      "title": "QNT/USDT - ${interval} Candlestick",
+      "type": "candlestick",
+      "gridPos": { "h": 10, "w": 8, "x": 16, "y": 10 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "axisPlacement": "auto" },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r.symbol == \"QNTUSDT\")\n  |> filter(fn: (r) => r._field == \"open\" or r._field == \"high\" or r._field == \"low\" or r._field == \"close\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "mode": "candles",
+        "candleStyle": "candles",
+        "colorStrategy": "open-close",
+        "colors": { "up": "green", "down": "red", "flat": "gray" },
+        "includeAllFields": false
+      }
+    },
+    {
+      "title": "Live Close Prices - ${interval} (All Symbols)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 20 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "pointSize": 3,
+            "showPoints": "auto"
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "right", "calcs": ["last", "min", "max"] },
+        "tooltip": { "mode": "multi" }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r._field == \"close\")\n  |> group(columns: [\"symbol\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "VWAP vs Close Price (BTC)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 28 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "line", "lineWidth": 2, "fillOpacity": 5 },
+          "unit": "currencyUSD"
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r.symbol == \"BTCUSDT\")\n  |> filter(fn: (r) => r._field == \"vwap\" or r._field == \"close\")\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "VWAP vs Close Price (DOT)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 28 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "line", "lineWidth": 2, "fillOpacity": 5 },
+          "unit": "currencyUSD"
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r.symbol == \"DOTUSDT\")\n  |> filter(fn: (r) => r._field == \"vwap\" or r._field == \"close\")\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "VWAP vs Close Price (BCH)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 28 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "line", "lineWidth": 2, "fillOpacity": 5 },
+          "unit": "currencyUSD"
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r.symbol == \"BCHUSDT\")\n  |> filter(fn: (r) => r._field == \"vwap\" or r._field == \"close\")\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "VWAP vs Close Price (QNT)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 36 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "line", "lineWidth": 2, "fillOpacity": 5 },
+          "unit": "currencyUSD"
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r.symbol == \"QNTUSDT\")\n  |> filter(fn: (r) => r._field == \"vwap\" or r._field == \"close\")\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "RSI (14-period)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 16, "x": 8, "y": 36 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "thresholdsStyle": { "mode": "line" }
+          },
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "#6ED0E0", "value": 30 },
+              { "color": "#EAB839", "value": 70 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"rsi\")\n  |> filter(fn: (r) => r._field == \"rsi\")\n  |> group(columns: [\"symbol\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Trading Volume (${interval} windows)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 44 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "lineWidth": 0,
+            "pointSize": 1,
+            "showPoints": "never"
+          }
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r._field == \"volume\")\n  |> group(columns: [\"symbol\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Moving Averages - SMA 7 vs SMA 14 (BTC)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 44 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "line", "lineWidth": 2 },
+          "unit": "currencyUSD"
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"moving_averages\")\n  |> filter(fn: (r) => r.symbol == \"BTCUSDT\")\n  |> filter(fn: (r) => r._field == \"sma_7\" or r._field == \"sma_14\" or r._field == \"price\")\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Moving Averages - SMA 7 vs SMA 14 (DOT)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 52 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "line", "lineWidth": 2 },
+          "unit": "currencyUSD"
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"moving_averages\")\n  |> filter(fn: (r) => r.symbol == \"DOTUSDT\")\n  |> filter(fn: (r) => r._field == \"sma_7\" or r._field == \"sma_14\" or r._field == \"price\")\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Moving Averages - SMA 7 vs SMA 14 (BCH)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 52 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "line", "lineWidth": 2 },
+          "unit": "currencyUSD"
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"moving_averages\")\n  |> filter(fn: (r) => r.symbol == \"BCHUSDT\")\n  |> filter(fn: (r) => r._field == \"sma_7\" or r._field == \"sma_14\" or r._field == \"price\")\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Moving Averages - SMA 7 vs SMA 14 (QNT)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 52 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "line", "lineWidth": 2 },
+          "unit": "currencyUSD"
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"moving_averages\")\n  |> filter(fn: (r) => r.symbol == \"QNTUSDT\")\n  |> filter(fn: (r) => r._field == \"sma_7\" or r._field == \"sma_14\" or r._field == \"price\")\n  |> group(columns: [\"_field\"])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Price Alerts",
+      "type": "table",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 60 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "severity" },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          }
+        ]
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"alerts\")\n  |> filter(fn: (r) => r._field == \"message\" or r._field == \"price\" or r._field == \"pct_change\" or r._field == \"rsi\")\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> sort(columns: [\"_time\"], desc: true)\n  |> limit(n: 50)",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "title": "Total Trades (Last Hour)",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 24, "x": 0, "y": 68 },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
+          "query": "from(bucket: \"crypto\")\n  |> range(start: -1h)\n  |> filter(fn: (r) => r._measurement == \"ohlc_${interval}\")\n  |> filter(fn: (r) => r._field == \"trade_count\")\n  |> group()\n  |> sum()",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": ["last"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "colorMode": "background"
+      }
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["crypto", "real-time", "flink"],
+  "templating": {
+    "list": [
+      {
+        "current": { "selected": true, "text": "1m", "value": "1m" },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "interval",
+        "label": "Candle Interval",
+        "options": [
+          { "selected": true, "text": "1 min", "value": "1m" },
+          { "selected": false, "text": "5 min", "value": "5m" },
+          { "selected": false, "text": "15 min", "value": "15m" },
+          { "selected": false, "text": "30 min", "value": "30m" },
+          { "selected": false, "text": "1 hour", "value": "1h" }
+        ],
+        "query": "1m,5m,15m,30m,1h",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": ["5s", "10s", "30s", "1m", "5m"]
+  },
+  "timezone": "browser",
+  "title": "Real-Time Crypto Analytics",
+  "uid": "crypto-realtime-dashboard",
+  "version": 1
+}
