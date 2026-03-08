@@ -89,12 +89,14 @@ services:
       influxdb:
         condition: service_healthy
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
-      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_USERS_ALLOW_SIGN_UP: "true"
       GF_USERS_ALLOW_ORG_CREATE: "false"
+      GF_USERS_AUTO_ASSIGN_ORG: "true"
+      GF_USERS_AUTO_ASSIGN_ORG_ROLE: "Viewer"
       GF_AUTH_ANONYMOUS_ENABLED: "false"
       GF_SECURITY_COOKIE_SECURE: "true"
       GF_SECURITY_STRICT_TRANSPORT_SECURITY: "true"
@@ -203,6 +205,47 @@ services:
       sleep infinity
       "
 
+  # --- Frontend ---
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: crypto-frontend
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    ports:
+      - "3000:3100"
+    environment:
+      INFLUXDB_URL: ${INFLUXDB_URL}
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
+      INFLUXDB_ORG: ${INFLUXDB_ORG}
+      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: http://localhost:3000
+      DATABASE_URL: file:/data/users.db
+      HOSTNAME: "0.0.0.0"
+    volumes:
+      - frontend-data:/data
+    restart: unless-stopped
+
+  # --- Historical Data Backfill ---
+  backfill:
+    build:
+      context: ./backfill
+      dockerfile: Dockerfile
+    container_name: crypto-backfill
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    environment:
+      INFLUXDB_URL: ${INFLUXDB_URL}
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
+      INFLUXDB_ORG: ${INFLUXDB_ORG}
+      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET}
+      SYMBOLS: ${SYMBOLS}
+    restart: "no"
+
   # --- Reverse Proxy ---
   nginx:
     image: nginx:alpine
@@ -220,3 +263,4 @@ services:
 volumes:
   influxdb-data:
   grafana-data:
+  frontend-data:
