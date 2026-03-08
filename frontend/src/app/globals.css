@@ -2,9 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-body: #0a0e17;
+  --bg-card: #111827;
+  --bg-card-hover: #1a2236;
+  --bg-input: #1a2236;
+  --border-color: #243049;
+  --text-primary: #ffffff;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+  --bg-main: #0d0f1a;
+  --card-green: #0d2818;
+  --card-green-hover: #103320;
+  --card-red: #2a0f0f;
+  --card-red-hover: #351414;
+  --card-neutral: #1c1f2e;
+  --card-neutral-hover: #252838;
+  --add-border: #2a2d3e;
+  --scrollbar-track: #111827;
+  --scrollbar-thumb: #374151;
+}
+
+html.light {
+  --bg-body: #f0f2f5;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8f9fa;
+  --bg-input: #f3f4f6;
+  --border-color: #d1d5db;
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --bg-main: #e8eaed;
+  --card-green: #dcfce7;
+  --card-green-hover: #bbf7d0;
+  --card-red: #fee2e2;
+  --card-red-hover: #fecaca;
+  --card-neutral: #f3f4f6;
+  --card-neutral-hover: #e5e7eb;
+  --add-border: #d1d5db;
+  --scrollbar-track: #e5e7eb;
+  --scrollbar-thumb: #9ca3af;
+}
+
 body {
-  background-color: #0a0e17;
-  color: #e5e7eb;
+  background-color: var(--bg-body);
+  color: var(--text-secondary);
 }
 
 ::-webkit-scrollbar {
@@ -12,9 +54,14 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #111827;
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #374151;
+  background: var(--scrollbar-thumb);
   border-radius: 3px;
+}
+
+@keyframes flash-fade {
+  0% { opacity: 0.25; }
+  100% { opacity: 0; }
 }

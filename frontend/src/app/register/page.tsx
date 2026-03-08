@@ -1,13 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { status } = useSession();
   const [name, setName] = useState("");
+
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/dashboard");
+    }
+  }, [status, router]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -42,25 +50,28 @@ export default function RegisterPage() {
       setError("Account created but login failed. Please sign in.");
       setLoading(false);
     } else {
-      router.push("/dashboard");
+      router.replace("/dashboard");
     }
   };
+
+  if (status === "authenticated") return null;
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>
             Crypto Analytics
           </h1>
-          <p className="text-gray-400">Create your account</p>
+          <p style={{ color: "var(--text-muted)" }}>Create your account</p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="bg-dark-800 border border-dark-600 rounded-lg p-6 space-y-4"
+          className="rounded-lg p-6 space-y-4"
+          style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)" }}
         >
-          <h2 className="text-xl font-semibold text-white">Register</h2>
+          <h2 className="text-xl font-semibold" style={{ color: "var(--text-primary)" }}>Register</h2>
 
           {error && (
             <div className="bg-red-900/30 border border-red-800 text-red-400 px-4 py-2 rounded text-sm">
@@ -69,35 +80,38 @@ export default function RegisterPage() {
           )}
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Name</label>
+            <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-dark-700 border border-dark-600 rounded-md px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+              className="w-full rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+              style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Email</label>
+            <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-dark-700 border border-dark-600 rounded-md px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+              className="w-full rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+              style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-400 mb-1">
+            <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-dark-700 border border-dark-600 rounded-md px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+              className="w-full rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+              style={{ backgroundColor: "var(--bg-input)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
               required
               minLength={6}
             />
@@ -111,7 +125,7 @@ export default function RegisterPage() {
             {loading ? "Creating account..." : "Create Account"}
           </button>
 
-          <p className="text-center text-sm text-gray-400">
+          <p className="text-center text-sm" style={{ color: "var(--text-muted)" }}>
             Already have an account?{" "}
             <Link href="/login" className="text-blue-400 hover:underline">
               Sign In

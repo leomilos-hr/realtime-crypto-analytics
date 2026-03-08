@@ -10,8 +10,8 @@ export default function AlertsFeed() {
   });
 
   return (
-    <div className="bg-dark-800 rounded-lg p-4 border border-dark-600">
-      <h3 className="text-white text-sm font-semibold mb-3">Recent Alerts</h3>
+    <div className="rounded-lg p-4" style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-color)" }}>
+      <h3 className="text-sm font-semibold mb-3" style={{ color: "var(--text-primary)" }}>Recent Alerts</h3>
       <div className="space-y-2 max-h-[400px] overflow-y-auto">
         {alerts && alerts.length > 0 ? (
           alerts.map((alert: any, i: number) => (

@@ -7,6 +7,7 @@ interface PriceData {
   symbol: string;
   price: number;
   open: number;
+  change?: number;
 }
 
 export default function LiveTicker() {
@@ -28,16 +29,16 @@ export default function LiveTicker() {
   }, []);
 
   return (
-    <div className="flex gap-4 overflow-x-auto py-2 px-4 bg-dark-800 border-b border-dark-600">
+    <div className="flex gap-4 overflow-x-auto py-2 px-4" style={{ backgroundColor: "var(--bg-card)", borderBottom: "1px solid var(--border-color)" }}>
       {prices.map((p) => {
-        const change = p.open > 0 ? ((p.price - p.open) / p.open) * 100 : 0;
+        const change = p.change !== undefined ? p.change : (p.open > 0 ? ((p.price - p.open) / p.open) * 100 : 0);
         const isUp = change >= 0;
         return (
           <div key={p.symbol} className="flex items-center gap-2 min-w-fit">
-            <span className="text-gray-400 text-sm font-medium">
+            <span className="text-sm font-medium" style={{ color: "var(--text-muted)" }}>
               {SYMBOL_LABELS[p.symbol as Symbol] || p.symbol}
             </span>
-            <span className="text-white text-sm font-mono">
+            <span className="text-sm font-mono" style={{ color: "var(--text-primary)" }}>
               ${p.price?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
             <span
