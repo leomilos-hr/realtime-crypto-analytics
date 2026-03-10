@@ -13,7 +13,6 @@ async function fetchBinancePrices() {
   if (!res.ok) throw new Error(`Binance API error: ${res.status}`);
   const data = await res.json();
 
-  // Index by symbol for fast lookup
   const bySymbol = new Map<string, any>();
   for (const t of data) {
     bySymbol.set(t.symbol, t);
@@ -23,10 +22,22 @@ async function fetchBinancePrices() {
 
 export async function GET() {
   const encoder = new TextEncoder();
+  let priceInterval: ReturnType<typeof setInterval> | null = null;
+  let keepAliveInterval: ReturnType<typeof setInterval> | null = null;
+  let closed = false;
+
+  const cleanup = () => {
+    closed = true;
+    if (priceInterval) clearInterval(priceInterval);
+    if (keepAliveInterval) clearInterval(keepAliveInterval);
+    priceInterval = null;
+    keepAliveInterval = null;
+  };
 
   const stream = new ReadableStream({
     async start(controller) {
       const sendPrices = async () => {
+        if (closed) return;
         try {
           const tickers = await fetchBinancePrices();
 
@@ -65,22 +76,28 @@ export async function GET() {
             encoder.encode(`data: ${JSON.stringify([...prices, ...allPrices])}\n\n`)
           );
         } catch (error) {
-          console.error("SSE price fetch error:", error);
+          if (!closed) console.error("SSE price fetch error:", error);
         }
       };
 
-      controller.enqueue(encoder.encode(": connected\n\n"));
-      await sendPrices();
-      const interval = setInterval(sendPrices, 10000);
-
-      const keepAlive = setInterval(() => {
-        try {
-          controller.enqueue(encoder.encode(": ping\n\n"));
-        } catch {
-          clearInterval(keepAlive);
-          clearInterval(interval);
-        }
-      }, 30000);
+      try {
+        controller.enqueue(encoder.encode(": connected\n\n"));
+        await sendPrices();
+        priceInterval = setInterval(sendPrices, 10000);
+        keepAliveInterval = setInterval(() => {
+          if (closed) return;
+          try {
+            controller.enqueue(encoder.encode(": ping\n\n"));
+          } catch {
+            cleanup();
+          }
+        }, 30000);
+      } catch {
+        cleanup();
+      }
+    },
+    cancel() {
+      cleanup();
     },
   });
 

@@ -8,9 +8,13 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String
-  createdAt DateTime @default(now())
+  id             String   @id @default(cuid())
+  email          String   @unique
+  name           String?
+  password       String?
+  image          String?
+  provider       String?
+  dashboardCoins String?
+  settings       String?
+  createdAt      DateTime @default(now())
 }

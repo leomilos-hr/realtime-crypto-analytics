@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react";
 import { SYMBOL_LABELS, Symbol } from "@/lib/types";
 
+const CURRENCY_SYMBOLS: Record<string, string> = {
+  USD: "$",
+  EUR: "\u20AC",
+  GBP: "\u00A3",
+};
+
 interface PriceData {
   symbol: string;
   price: number;
@@ -10,8 +16,14 @@ interface PriceData {
   change?: number;
 }
 
-export default function LiveTicker() {
+interface Props {
+  currency?: string;
+  exchangeRate?: number;
+}
+
+export default function LiveTicker({ currency = "USD", exchangeRate = 1 }: Props) {
   const [prices, setPrices] = useState<PriceData[]>([]);
+  const sym = CURRENCY_SYMBOLS[currency] || "$";
 
   useEffect(() => {
     const eventSource = new EventSource("/api/live");
@@ -33,13 +45,14 @@ export default function LiveTicker() {
       {prices.map((p) => {
         const change = p.change !== undefined ? p.change : (p.open > 0 ? ((p.price - p.open) / p.open) * 100 : 0);
         const isUp = change >= 0;
+        const converted = p.price * exchangeRate;
         return (
           <div key={p.symbol} className="flex items-center gap-2 min-w-fit">
             <span className="text-sm font-medium" style={{ color: "var(--text-muted)" }}>
               {SYMBOL_LABELS[p.symbol as Symbol] || p.symbol}
             </span>
             <span className="text-sm font-mono" style={{ color: "var(--text-primary)" }}>
-              ${p.price?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              {sym}{converted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
             <span
               className={`text-xs font-mono ${

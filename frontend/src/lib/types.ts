@@ -10,7 +10,7 @@ export const SYMBOLS = [
 
 export type Symbol = (typeof SYMBOLS)[number];
 
-export const INTERVALS = ["1m", "5m", "15m", "30m", "1h"] as const;
+export const INTERVALS = ["1s", "5s", "1m", "5m", "15m", "30m", "1h", "4h", "1d", "1w"] as const;
 export type Interval = (typeof INTERVALS)[number];
 
 // Coin metadata type used for both default and user-added coins
@@ -20,15 +20,11 @@ export interface CoinConfig {
   name: string;      // e.g. "Bitcoin"
 }
 
-// Default coins (these have full pipeline data)
+// Default coins for new users (kept small — users can add more)
 export const DEFAULT_COINS: CoinConfig[] = [
   { pair: "BTCUSDT", ticker: "BTC", name: "Bitcoin" },
   { pair: "ETHUSDT", ticker: "ETH", name: "Ethereum" },
-  { pair: "SOLUSDT", ticker: "SOL", name: "Solana" },
-  { pair: "ADAUSDT", ticker: "ADA", name: "Cardano" },
-  { pair: "DOTUSDT", ticker: "DOT", name: "Polkadot" },
-  { pair: "BCHUSDT", ticker: "BCH", name: "Bitcoin Cash" },
-  { pair: "QNTUSDT", ticker: "QNT", name: "Quant" },
+  { pair: "LTCUSDT", ticker: "LTC", name: "Litecoin" },
 ];
 
 // Top 200+ coins by market cap (Binance USDT pairs)

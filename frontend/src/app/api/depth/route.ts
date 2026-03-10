@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { sanitizeSymbol } from "@/lib/validate";
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -9,12 +10,12 @@ export async function GET(req: NextRequest) {
   }
 
   const { searchParams } = new URL(req.url);
-  const symbol = searchParams.get("symbol") || "BTCUSDT";
-  const limit = Math.min(parseInt(searchParams.get("limit") || "100"), 500);
+  const symbol = sanitizeSymbol(searchParams.get("symbol")) || "BTCUSDT";
+  const limit = Math.min(Math.max(1, parseInt(searchParams.get("limit") || "100") || 100), 500);
 
   try {
     const res = await fetch(
-      `https://api.binance.com/api/v3/depth?symbol=${encodeURIComponent(symbol)}&limit=${limit}`
+      `https://api.binance.com/api/v3/depth?symbol=${symbol}&limit=${limit}`
     );
     if (!res.ok) throw new Error("Binance API error");
     const data = await res.json();

@@ -3,20 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --bg-body: #0a0e17;
+  --bg-body: #13151a;
   --bg-card: #111827;
   --bg-card-hover: #1a2236;
   --bg-input: #1a2236;
   --border-color: #243049;
   --text-primary: #ffffff;
   --text-secondary: #e5e7eb;
-  --text-muted: #9ca3af;
-  --bg-main: #0d0f1a;
+  --text-muted: #7a7f8e;
+  --bg-main: #13151a;
+  --card-tile: #1c1f2a;
+  --card-tile-hover: #24273a;
+  --card-tile-border: #2a2d3e;
   --card-green: #0d2818;
   --card-green-hover: #103320;
   --card-red: #2a0f0f;
   --card-red-hover: #351414;
-  --card-neutral: #1c1f2e;
+  --card-neutral: #1c1f2a;
   --card-neutral-hover: #252838;
   --add-border: #2a2d3e;
   --scrollbar-track: #111827;
@@ -33,6 +36,9 @@ html.light {
   --text-secondary: #374151;
   --text-muted: #6b7280;
   --bg-main: #e8eaed;
+  --card-tile: #ffffff;
+  --card-tile-hover: #f3f4f6;
+  --card-tile-border: #e5e7eb;
   --card-green: #dcfce7;
   --card-green-hover: #bbf7d0;
   --card-red: #fee2e2;
@@ -64,4 +70,34 @@ body {
 @keyframes flash-fade {
   0% { opacity: 0.25; }
   100% { opacity: 0; }
+}
+
+/* View transition animations */
+@keyframes view-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.view-enter {
+  animation: view-fade-in 0.35s ease-out both;
+}
+
+/* Staggered card entrance */
+@keyframes card-pop-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.card-enter {
+  animation: card-pop-in 0.3s ease-out both;
+}
+
+/* Slide-in for detail view */
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.detail-enter {
+  animation: slide-in-right 0.35s ease-out both;
 }
